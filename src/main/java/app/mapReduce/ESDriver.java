@@ -34,7 +34,6 @@ public class ESDriver {
         IndexResponse response = client.prepareIndex(airWeatherIDx, airWeatherIdxType)
                 .setSource(object.toMap())
                 .get();
-        System.out.print(response);
     }
 
     public void InsertTrafficJSON(JSONObject object) throws ExecutionException, InterruptedException {
@@ -47,8 +46,6 @@ public class ESDriver {
         IndexResponse response = client.prepareIndex(trafficIndex,trafficIndexype, String.valueOf(object.getLong("id")))
                 .setSource(object.toMap())
                 .get();
-        System.out.print(response);
-        System.out.print(response);
     }
 
 }
