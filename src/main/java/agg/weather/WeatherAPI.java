@@ -3,16 +3,14 @@ package agg.weather;
 /**
  * Created by sbr on 4/23/17.
  */
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import agg.Cities;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -65,6 +63,7 @@ public class WeatherAPI {
         finalData.put("temp_max", weatherjson.getJSONObject("main").get("temp_max"));
         finalData.put("type", weatherjson.getJSONArray("weather").getJSONObject(0).get("main"));
         finalData.put("city", city);
+        finalData.put("location", Cities.getLatLon.get(city));
         //System.out.println(finalData.toString());
         return finalData.toString();
 

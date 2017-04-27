@@ -3,9 +3,7 @@ package agg.weather;
 /**
  * Created by sbr on 4/23/17.
  */
-import java.util.Properties;
-
-import agg.weather.WeatherAPI;
+import agg.Cities;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -13,6 +11,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Properties;
 
 public class WProducer implements Runnable {
 
@@ -45,13 +44,13 @@ public class WProducer implements Runnable {
         try {
             producer = new KafkaProducer<String,String>(prop);
             while (true) {
-                for (int i = 0; i < city_list.length; i++) {
+                for (String city : Cities.cities) {
                     Calendar calobj = Calendar.getInstance();
                     DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
                     System.out.println(df.format(calobj.getTime()) + "  Sending message");
                     String weatherjson = "";
                     try {
-                        weatherjson = wapi.getJSON(city_list[i]);
+                        weatherjson = wapi.getJSON(city);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
