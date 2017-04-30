@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -193,5 +193,28 @@
     <orderEntry type="library" name="Maven: org.zeromq:zeromq-scala-binding_2.9.1:0.0.6" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna:3.0.9" level="project" />
     <orderEntry type="library" name="Maven: com.github.jnr:jnr-constants:0.8.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-streaming_2.10:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-core_2.10:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:chill_2.10:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-launcher_2.10:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-network-common_2.10:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-network-shuffle_2.10:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-unsafe_2.10:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016" level="project" />
+    <orderEntry type="library" name="Maven: com.typesafe.akka:akka-remote_2.10:2.3.11" level="project" />
+    <orderEntry type="library" name="Maven: com.typesafe.akka:akka-actor_2.10:2.3.11" level="project" />
+    <orderEntry type="library" name="Maven: org.uncommons.maths:uncommons-maths:1.2.2a" level="project" />
+    <orderEntry type="library" name="Maven: com.typesafe.akka:akka-slf4j_2.10:2.3.11" level="project" />
+    <orderEntry type="library" name="Maven: org.json4s:json4s-jackson_2.10:3.2.10" level="project" />
+    <orderEntry type="library" name="Maven: org.json4s:json4s-core_2.10:3.2.10" level="project" />
+    <orderEntry type="library" name="Maven: org.json4s:json4s-ast_2.10:3.2.10" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.jersey:jersey-server:1.9" level="project" />
+    <orderEntry type="library" name="Maven: asm:asm:3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.mesos:mesos:shaded-protobuf:0.21.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-scala_2.10:2.4.4" level="project" />
+    <orderEntry type="library" name="Maven: org.tachyonproject:tachyon-client:0.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.tachyonproject:tachyon-underfs-hdfs:0.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.tachyonproject:tachyon-underfs-local:0.7.1" level="project" />
   </component>
 </module>

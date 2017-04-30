@@ -26,6 +26,4 @@ public class KProducer {
     public void Produce(String topic, JSONObject obj){
         producer.send(new ProducerRecord<String,String>(topic,obj.toString()));
     }
-
-
 }
