@@ -24,7 +24,7 @@ public class airThreadFunc implements Runnable{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                JSONObject airParse = air.parseJSON(airJson,city);
+                String airParse = air.parseJSON(airJson,city);
                 KProducer pub = new KProducer();
                 pub.Produce(kafkaTopic, airParse);
             }

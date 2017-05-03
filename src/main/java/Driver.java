@@ -2,9 +2,9 @@
  * Created by sbr on 4/23/17.
  */
 import agg.Cities;
-import agg.air.airThreadFunc;
 import agg.traffic.TrafficThreadFunc;
 import agg.weather.WProducer;
+import agg.air.airThreadFunc;
 
 public class Driver {
     public static void main (String args[]) throws InterruptedException {
@@ -23,6 +23,7 @@ public class Driver {
         Thread trafficThread = new Thread(trafficRunnable);
 
         airThreadFunc airRunnable = new airThreadFunc(airThreadDelay,kafkaAirTopic);
+        //AProducer airRunnable = new AProducer(airThreadDelay,kafkaAirTopic);
         Thread airThread = new Thread(airRunnable);
 
         WProducer weatherRunnable = new WProducer(weatherThreadDelay,kafkaWeatherTopic);
@@ -31,7 +32,6 @@ public class Driver {
         trafficThread.start();
         airThread.start();
         weatherThread.start();
-
         trafficThread.join();
         airThread.join();
         weatherThread.join();
