@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,8 @@ public class MonitorThread implements Runnable{
     private Double MAX_RATE = 100.0;
     private Integer WINDOW_SIZE = 5;
     private Integer TIME = 10; // in  seconds
+    private Integer WAIT_BEFORE_CREATION = WINDOW_SIZE * TIME / 2;
+    private long lastCreationTime = 0;
     private HashMap<Socket, ArrayList<Integer>> workerLoads = new HashMap<Socket,ArrayList<Integer>>();
     private enum ACTION {
             NO_ACTION ,
@@ -68,12 +71,19 @@ public class MonitorThread implements Runnable{
     }
 
     private void CreateNewNode (String topic) throws Exception {
-        logger.debug("Creating New node for topic : " + topic);
+        long curTime = Instant.now().toEpochMilli() / 1000L;
+       if(lastCreationTime == 0 || (curTime - lastCreationTime) > WAIT_BEFORE_CREATION) {
+           logger.debug("Creating New node for topic : " + topic);
 //        Process p = Runtime.getRuntime().exec("cd target/classes/app/mapReduce\njava WorkerNode\n");
 //        pro.add(p);
-        //runProcess("export PATH=$PATH:/Users/sbr/Downloads/apache-maven-3.5.0/bin");
-        Runtime.getRuntime().exec("mvn exec:java -Dexec.mainClass=\"app.mapReduce.WorkerNode\"");
-        //runProcess("mvn exec:java -Dexec.mainClass=\"app.mapReduce.WorkerNode\"");
+           //runProcess("export PATH=$PATH:/Users/sbr/Downloads/apache-maven-3.5.0/bin");
+           Runtime.getRuntime().exec("mvn exec:java -Dexec.mainClass=\"app.mapReduce.WorkerNode\"");
+           //runProcess("mvn exec:java -Dexec.mainClass=\"app.mapReduce.WorkerNode\"");
+           lastCreationTime = curTime;
+       }
+       else{
+           logger.debug("Wait to create new node");
+       }
 
 
     }
