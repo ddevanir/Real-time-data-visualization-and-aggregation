@@ -106,11 +106,7 @@ public class MonitorThread implements Runnable{
 
     @Override
     public void run() {
-        try {
-            CreateNewNode("");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         while(true){
             Map<String,TCPConnection> clientMap = MasterNode.clientMap;
             for (Map.Entry<String, TCPConnection> entry : clientMap.entrySet()){

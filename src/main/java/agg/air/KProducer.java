@@ -1,8 +1,8 @@
 package agg.air;
 import java.util.Properties;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+
+import agg.KPartitioner;
+import org.apache.kafka.clients.producer.*;
 import org.json.JSONObject;
 
 /**
@@ -21,10 +21,18 @@ public class KProducer {
         prop.put("buffer.memory", 33554432);
         prop.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         prop.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        prop.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, KPartitioner.class.getCanonicalName());
         producer = new KafkaProducer<String,String>(prop);
     }
-    public void Produce(String topic, JSONObject obj){
-        producer.send(new ProducerRecord<String,String>(topic,obj.toString()));
+    public void Produce(String topic, String obj){
+        ProducerRecord<String, String> rec = new ProducerRecord<String, String>(topic,obj);
+        System.out.println(obj);
+        producer.send(rec, new Callback() {
+            @Override
+            public void onCompletion(RecordMetadata metadata, Exception e) {
+                System.out.println("Message sent to topic ->" + metadata.topic()+ " ,partition->" + metadata.partition() +" stored at offset->" + metadata.offset());
+            }
+        });
     }
 
 

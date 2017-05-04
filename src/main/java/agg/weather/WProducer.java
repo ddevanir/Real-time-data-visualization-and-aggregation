@@ -2,16 +2,26 @@ package agg.weather;
 
 /**
  * Created by sbr on 4/23/17.
+ * ./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic weather
+ * http://www.javaworld.com/article/3066873/big-data/big-data-messaging-with-kafka-part-2.html
+ * ./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic weather --partitions 2
+ * http://stackoverflow.com/questions/27036923/how-to-create-a-topic-in-kafka-through-java
+ * bin/kafka-topics.sh --list --zookeeper localhost:2181
  */
 import agg.Cities;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import agg.KPartitioner;
+import org.apache.kafka.clients.producer.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
+import kafka.admin.AdminUtils;
+import kafka.utils.ZkUtils;
+import kafka.utils.ZKStringSerializer$;
+import org.I0Itec.zkclient.ZkClient;
+import org.I0Itec.zkclient.ZkConnection;
+
 
 public class WProducer implements Runnable {
 
@@ -25,9 +35,7 @@ public class WProducer implements Runnable {
     public void run() {
         //Gets the weather related data
         WeatherAPI wapi = new WeatherAPI();
-
-
-        String city_list[] = {"New York", "Los Angeles"};
+        ZkUtils zkUtils = null;
 
 
         //Sets up the producer
@@ -40,6 +48,11 @@ public class WProducer implements Runnable {
         prop.put("buffer.memory", 33554432);
         prop.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         prop.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        prop.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,KPartitioner.class.getCanonicalName());
+
+
+
+
         Producer<String, String> producer = null;
         try {
             producer = new KafkaProducer<String,String>(prop);
@@ -55,11 +68,19 @@ public class WProducer implements Runnable {
                         System.out.println(e.getMessage());
                     }
                     System.out.println(weatherjson);
-                    producer.send(new ProducerRecord<String, String>(kafkaTopic, weatherjson));
+                    ProducerRecord<String, String> rec = new ProducerRecord<String, String>(kafkaTopic,weatherjson);
+
+                    producer.send(rec, new Callback() {
+                        @Override
+                        public void onCompletion(RecordMetadata metadata, Exception e) {
+                            System.out.println("Message sent to topic ->" + metadata.topic()+ " ,parition->" + metadata.partition() +" stored at offset->" + metadata.offset());
+                        }
+                    });
                     System.out.println(df.format(calobj.getTime()) + "  Sent\n");
+                    ;
                 }
 
-                Thread.sleep(timeInterval * 60 * 1000);
+                Thread.sleep(timeInterval * 40 * 1000);
             }
 
         } catch (Exception e) {
