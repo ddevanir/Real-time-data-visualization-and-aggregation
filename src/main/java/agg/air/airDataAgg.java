@@ -36,13 +36,13 @@ public class airDataAgg {
         return airJson;
     }
 
-    public JSONObject parseJSON(JSONObject airJson,String city) {
+    public String parseJSON(JSONObject airJson,String city) {
         JSONObject airData = new JSONObject();
         airData.put("AQI", airJson.getJSONObject("data").get("aqi"));
         airData.put("ID", airJson.getJSONObject("data").get("idx"));
         airData.put("City", airJson.getJSONObject("data").getJSONObject("city").get("name"));
         airData.put("location", Cities.getLatLon.get(city));
         airData.put("Time", airJson.getJSONObject("data").getJSONObject("time").get("s"));
-        return airData;
+        return airData.toString();
     }
 }

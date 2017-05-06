@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by beep on 4/29/17.
+ *
  */
 public class ConsumerGroup {
     private final ConsumerConnector consumer;
