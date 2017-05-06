@@ -46,6 +46,7 @@ public class mapReduce {
 //        kafkaParams.put("auto.offset.reset", "latest");
 //        kafkaParams.put("enable.auto.commit", false);
 
+
 //        // Create direct kafka stream with brokers and topics
 //        JavaPairInputDStream<String, String> messages = KafkaUtils.createDirectStream(
 //                jssc,
