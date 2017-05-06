@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b28935ad-60ab-4ee2-ab13-dcc472c9722a" name="Default" comment="Merge branch 'master' of https://bitbucket.org/SBRAJ/data-agg-vis&#10;&#10;# Conflicts:&#10;#&#9;.idea/data-agg-vis.iml&#10;#&#9;.idea/workspace.xml&#10;#&#9;pom.xml&#10;#&#9;src/main/java/app/mapReduce/mapReduce.java&#10;#&#9;target/classes/app/mapReduce/mapReduce.class&#10;Consumer Group">
+    <list default="true" id="b28935ad-60ab-4ee2-ab13-dcc472c9722a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -94,8 +94,8 @@
       <file leaf-file-name="KProducer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/agg/air/KProducer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state relative-caret-position="60">
+              <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -803,7 +803,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493247079491</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Merge branch 'master' of https://bitbucket.org/SBRAJ/data-agg-vis&#10;&#10;# Conflicts:&#10;#&#9;.idea/data-agg-vis.iml&#10;#&#9;.idea/workspace.xml&#10;#&#9;pom.xml&#10;#&#9;src/main/java/app/mapReduce/mapReduce.java&#10;#&#9;target/classes/app/mapReduce/mapReduce.class&#10;Consumer Group">
+      <created>1494106739297</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1494106739297</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1361,8 +1368,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/agg/air/KProducer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+        <state relative-caret-position="60">
+          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
           <folding />
         </state>
       </provider>
