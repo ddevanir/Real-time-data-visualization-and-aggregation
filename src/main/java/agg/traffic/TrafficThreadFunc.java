@@ -1,5 +1,6 @@
 package agg.traffic;
 
+import agg.Cities;
 import org.apache.http.HttpException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,7 +32,7 @@ public class TrafficThreadFunc implements Runnable{
 
 
         while (true) {
-            for (Map.Entry<String, String> entry : cities.entrySet()) {
+            for (Map.Entry<String, String> entry : Cities.citiesbybb.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 JSONObject obj = null;

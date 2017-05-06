@@ -1,4 +1,5 @@
 package agg.air;
+import agg.Cities;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -35,11 +36,12 @@ public class airDataAgg {
         return airJson;
     }
 
-    public JSONObject parseJSON(JSONObject airJson) {
+    public JSONObject parseJSON(JSONObject airJson,String city) {
         JSONObject airData = new JSONObject();
         airData.put("AQI", airJson.getJSONObject("data").get("aqi"));
         airData.put("ID", airJson.getJSONObject("data").get("idx"));
         airData.put("City", airJson.getJSONObject("data").getJSONObject("city").get("name"));
+        airData.put("location", Cities.getLatLon.get(city));
         airData.put("Time", airJson.getJSONObject("data").getJSONObject("time").get("s"));
         return airData;
     }

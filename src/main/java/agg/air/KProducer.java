@@ -21,6 +21,7 @@ public class KProducer {
         prop.put("buffer.memory", 33554432);
         prop.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         prop.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        prop.put("num.partitions", "2");
         producer = new KafkaProducer<String,String>(prop);
     }
     public void Produce(String topic, JSONObject obj){

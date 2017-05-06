@@ -1,8 +1,8 @@
 package agg.air;
+import agg.Cities;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 /**
  * Created by sbr on 4/23/17.
  */
@@ -16,19 +16,15 @@ public class airThreadFunc implements Runnable{
     }
     public void run() {
         airDataAgg air = new airDataAgg();
-        ArrayList<String> cities = new ArrayList<String>();
-        cities.add("NewYork");
-        cities.add("Irvine");
-
         while (true) {
-            for (String city : cities) {
+            for (String city : Cities.cities) {
                 JSONObject airJson = null;
                 try {
                     airJson = air.getJSONFromUrl(city);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                JSONObject airParse = air.parseJSON(airJson);
+                JSONObject airParse = air.parseJSON(airJson,city);
                 KProducer pub = new KProducer();
                 pub.Produce(kafkaTopic, airParse);
             }

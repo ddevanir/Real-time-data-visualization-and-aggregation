@@ -1,19 +1,19 @@
 package agg.traffic;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import agg.Cities;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 
 public class TrafficDataAgg{
     private String appKey = "cPF1vAQ0yQOCSJ76v94CStE6XsanwaBt";
@@ -42,6 +42,7 @@ public class TrafficDataAgg{
             JSONObject traffic = new JSONObject();
             traffic.put("id",obj.getLong("id"));
             traffic.put("city",key);
+            traffic.put("location", Cities.getLatLon.get(key));
             traffic.put("type",obj.getInt("type"));
             traffic.put("severity",obj.getInt("severity"));
             traffic.put("startTime",obj.getString("startTime"));

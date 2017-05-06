@@ -1,12 +1,14 @@
 /**
  * Created by sbr on 4/23/17.
  */
-import agg.traffic.TrafficThreadFunc;
+import agg.Cities;
 import agg.air.airThreadFunc;
+import agg.traffic.TrafficThreadFunc;
 import agg.weather.WProducer;
 
 public class Driver {
     public static void main (String args[]) throws InterruptedException {
+        Cities.Init();
 
         // in minutes
         Integer trafficThreadDelay = 1;
@@ -33,6 +35,5 @@ public class Driver {
         trafficThread.join();
         airThread.join();
         weatherThread.join();
-
     }
 }
