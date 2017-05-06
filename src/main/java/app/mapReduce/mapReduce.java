@@ -15,36 +15,36 @@ import org.scalatest.tools.Durations;
 import java.util.*;
 
 public class mapReduce {
-//    public void initializekafka() {
-//        Map<String, Object> kafkaParams = new HashMap<>();
-//        kafkaParams.put("bootstrap.servers", "localhost:9092");
-//        kafkaParams.put("key.deserializer", StringDeserializer.class);
-//        kafkaParams.put("value.deserializer", StringDeserializer.class);
-//        kafkaParams.put("group.id", "use_a_separate_group_id_for_each_stream");
-//        kafkaParams.put("auto.offset.reset", "latest");
-//        kafkaParams.put("enable.auto.commit", false);
-//
-//        Collection<String> topics = Arrays.asList("air", "weather", "traffic");
-//    }
-
-    public void kafkaSpark() {
-        String topics = "air, weather, traffic";
-
-        // Create context with a 2 seconds batch interval
-        SparkConf sparkConf = new SparkConf().setAppName("StreamingE")
-                .setMaster("local[1]");
-
-        JavaStreamingContext jssc;
-        //jssc = new JavaStreamingContext(sparkConf, Durations.seconds(2));
-        Set<String> topicsSet = new HashSet<>(Arrays.asList(topics.split(",")));
+    public void initializekafka() {
         Map<String, Object> kafkaParams = new HashMap<>();
-
         kafkaParams.put("bootstrap.servers", "localhost:9092");
         kafkaParams.put("key.deserializer", StringDeserializer.class);
         kafkaParams.put("value.deserializer", StringDeserializer.class);
         kafkaParams.put("group.id", "use_a_separate_group_id_for_each_stream");
         kafkaParams.put("auto.offset.reset", "latest");
         kafkaParams.put("enable.auto.commit", false);
+
+        Collection<String> topics = Arrays.asList("air", "weather", "traffic");
+    }
+
+//    public void kafkaSpark() {
+//        String topics = "air, weather, traffic";
+//
+//        // Create context with a 2 seconds batch interval
+//        SparkConf sparkConf = new SparkConf().setAppName("StreamingE")
+//                .setMaster("local[1]");
+//
+//        JavaStreamingContext jssc;
+//        //jssc = new JavaStreamingContext(sparkConf, Durations.seconds(2));
+//        Set<String> topicsSet = new HashSet<>(Arrays.asList(topics.split(",")));
+//        Map<String, Object> kafkaParams = new HashMap<>();
+//
+//        kafkaParams.put("bootstrap.servers", "localhost:9092");
+//        kafkaParams.put("key.deserializer", StringDeserializer.class);
+//        kafkaParams.put("value.deserializer", StringDeserializer.class);
+//        kafkaParams.put("group.id", "use_a_separate_group_id_for_each_stream");
+//        kafkaParams.put("auto.offset.reset", "latest");
+//        kafkaParams.put("enable.auto.commit", false);
 
 //        // Create direct kafka stream with brokers and topics
 //        JavaPairInputDStream<String, String> messages = KafkaUtils.createDirectStream(
@@ -60,5 +60,5 @@ public class mapReduce {
 //        // Start the computation
 //        jssc.start();
 //        jssc.awaitTermination();
-    }
+//    }
 }
