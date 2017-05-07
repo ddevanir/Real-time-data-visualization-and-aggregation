@@ -1,3 +1,5 @@
+package app.mapReduce;
+
 import agg.Cities;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;

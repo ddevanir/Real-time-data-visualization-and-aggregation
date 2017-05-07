@@ -1,14 +1,12 @@
+package app.mapReduce;
+
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by beep on 4/29/17.
@@ -65,12 +63,12 @@ public class ConsumerGroup {
             executor.submit(new ConsumerThread(stream, threadNumber));
             threadNumber++;
         }
-
     }
+
     public static void main(String[] args) {
         String zooKeeper = "localhost:2181";
         String groupId = "group3";
-        String topic = "air";
+        String topic = args[0];
         int threads = Integer.parseInt("4");
 
         ConsumerGroup obj = new ConsumerGroup(zooKeeper, groupId, topic);
@@ -80,7 +78,6 @@ public class ConsumerGroup {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException ie) {
-
             }
         }
 //        obj.shutdown();
