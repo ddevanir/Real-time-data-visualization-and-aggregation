@@ -7,6 +7,7 @@ package agg.weather;
  * ./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic weather --partitions 2
  * http://stackoverflow.com/questions/27036923/how-to-create-a-topic-in-kafka-through-java
  * bin/kafka-topics.sh --list --zookeeper localhost:2181
+ *
  */
 import agg.Cities;
 import agg.KPartitioner;

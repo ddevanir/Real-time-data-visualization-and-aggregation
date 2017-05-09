@@ -30,10 +30,10 @@ public class Driver {
         Thread weatherThread = new Thread(weatherRunnable);
 
         trafficThread.start();
-        airThread.start();
+        //airThread.start();
         weatherThread.start();
         trafficThread.join();
-        airThread.join();
+        //airThread.join();
         weatherThread.join();
     }
 }
