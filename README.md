@@ -6,8 +6,7 @@ Step 2: Start the server
 //start kafka server
 > bin/kafka-server-start.sh config/server.properties
 
-> bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1   
---partitions 2 --topic weather
+> bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1  --partitions 2 --topic weather (optional)
+>bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1  --partitions 3 --topic traffic (optional)
 > ./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic weather --partitions 2
-> ./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic air --partitions 2
 > ./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic traffic --partitions 3
