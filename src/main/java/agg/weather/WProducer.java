@@ -11,17 +11,13 @@ package agg.weather;
  */
 import agg.Cities;
 import agg.KPartitioner;
+import kafka.utils.ZkUtils;
 import org.apache.kafka.clients.producer.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
-import kafka.admin.AdminUtils;
-import kafka.utils.ZkUtils;
-import kafka.utils.ZKStringSerializer$;
-import org.I0Itec.zkclient.ZkClient;
-import org.I0Itec.zkclient.ZkConnection;
 
 
 public class WProducer implements Runnable {
@@ -74,7 +70,7 @@ public class WProducer implements Runnable {
                     producer.send(rec, new Callback() {
                         @Override
                         public void onCompletion(RecordMetadata metadata, Exception e) {
-                            System.out.println("Message sent to topic ->" + metadata.topic()+ " ,parition->" + metadata.partition() +" stored at offset->" + metadata.offset());
+                           System.out.println("Message sent to topic ->" + metadata.topic()+ " ,parition->" + metadata.partition() +" stored at offset->" + metadata.offset());
                         }
                     });
                     System.out.println(df.format(calobj.getTime()) + "  Sent\n");

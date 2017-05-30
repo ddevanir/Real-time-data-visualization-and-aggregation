@@ -1,9 +1,8 @@
 package agg.traffic;
-import java.util.Properties;
-
-import agg.KPartitioner;
 import org.apache.kafka.clients.producer.*;
 import org.json.JSONObject;
+
+import java.util.Properties;
 
 /**
  * Created by sbr on 4/19/17.

@@ -60,7 +60,7 @@ public class ConsumerGroup {
         //
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new ConsumerThread(stream, threadNumber));
+            executor.submit(new ConsumerThread(stream, threadNumber,topic));
             threadNumber++;
         }
     }

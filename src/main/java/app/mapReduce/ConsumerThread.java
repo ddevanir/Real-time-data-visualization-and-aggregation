@@ -1,10 +1,11 @@
 package app.mapReduce;
 
-import agg.Cities;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
+import org.json.JSONObject;
 
-import static agg.Cities.cities;
+import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by beep on 4/29/17.
@@ -12,10 +13,18 @@ import static agg.Cities.cities;
 public class ConsumerThread implements Runnable{
     private KafkaStream m_stream;
     private int m_threadNumber;
+    private String m_topic;
+    ESDriver m_ESDriver;
 
-    public ConsumerThread(KafkaStream m_stream, int m_threadNumber) {
+    public ConsumerThread(KafkaStream m_stream, int m_threadNumber, String topic) {
         this.m_stream = m_stream;
         this.m_threadNumber = m_threadNumber;
+        this.m_topic = topic;
+        try {
+            m_ESDriver = new ESDriver();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -24,8 +33,22 @@ public class ConsumerThread implements Runnable{
             ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
             while(true) {
                 while (it.hasNext()) {
-                    System.out.println("Thread " + m_threadNumber + ": " + new String(it.next().message()));
+                    String msg = new String(it.next().message());
+                    System.out.println("Thread " + m_threadNumber + ": " + msg);
+
+                        try {
+                            if(m_topic.equals("traffic")) {
+                                m_ESDriver.InsertTrafficJSON(new JSONObject(msg));
+                            }
+                            else{
+                                m_ESDriver.InsertAirWeatherJSON(new JSONObject(msg));
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                 }
+            }
         }
     }
-}

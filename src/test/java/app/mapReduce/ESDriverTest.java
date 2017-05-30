@@ -20,7 +20,7 @@ public class ESDriverTest {
     @Test
     public void test1(){
         JSONObject object = new JSONObject();
-        object.put("name","sachin");
+        object.put("name","USA");
         driver.InsertAirWeatherJSON(object);
     }
 

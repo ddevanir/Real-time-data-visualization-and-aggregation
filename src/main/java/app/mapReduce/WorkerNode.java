@@ -1,10 +1,5 @@
 package app.mapReduce;
 
-import com.twitter.chill.java.ArraysAsListSerializer;
-
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by sbr on 5/3/17.
  */
@@ -17,7 +12,7 @@ public class WorkerNode {
         String zooKeeper = "localhost:2181";
         String groupId = "group3";
         String topic = args[0];
-        int threads = Integer.parseInt("4");
+        int threads = Integer.parseInt("1");
 
         ConsumerGroup obj = new ConsumerGroup(zooKeeper, groupId, topic);
         obj.run(threads);
