@@ -53,3 +53,5 @@ PUT airweather
         }
     }
 }
+
+>> ./kibana-5.4.1-darwin-x86_64/config/kibana.yml uncomment elasticsearch.url: "http://localhost:9200" in line 21. This will connect kibana with elasticsearch
