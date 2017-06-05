@@ -4,6 +4,7 @@ import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
 
@@ -17,7 +18,7 @@ public class ConsumerThread implements Runnable{
     ESDriver m_ESDriver;
     private  LoadStats stats;
 
-    public ConsumerThread(KafkaStream m_stream, int m_threadNumber, String topic, LoadStats stats) {
+    public ConsumerThread(KafkaStream m_stream, int m_threadNumber, String topic, LoadStats stats) throws IOException {
         this.m_stream = m_stream;
         this.m_threadNumber = m_threadNumber;
         this.m_topic = topic;

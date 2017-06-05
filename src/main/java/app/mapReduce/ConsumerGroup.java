@@ -4,6 +4,7 @@ import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,11 @@ public class ConsumerGroup {
         //
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new ConsumerThread(stream, threadNumber,topic,stats));
+            try {
+                executor.submit(new ConsumerThread(stream, threadNumber,topic,stats));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             threadNumber++;
         }
     }
