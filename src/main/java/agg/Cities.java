@@ -20,9 +20,9 @@ public class Cities {
         getLatLon.put("Chicago","41.8781,-87.6298");
         citiesbybb.put("Chicago", "41.644335%2C-87.940267%2C42.023131%2C-87.523661");
 
-        cities.add("Los Angeles");
-        getLatLon.put("Los Angeles","34.0522,-118.2437");
-        citiesbybb.put("Los Angeles","33.703652%2C-118.668176%2C34.337306%2C-118.155289");
+        cities.add("Los%20Angeles");
+        getLatLon.put("Los%20Angeles","34.0522,-118.2437");
+        citiesbybb.put("Los%20Angeles","33.703652%2C-118.668176%2C34.337306%2C-118.155289");
 
         cities.add("Irvine");
         getLatLon.put("Irvine","33.6846,-117.8265");

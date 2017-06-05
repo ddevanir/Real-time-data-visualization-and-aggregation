@@ -1,11 +1,13 @@
 package app.mapReduce;
 
+import java.io.IOException;
+
 /**
  * Created by sbr on 5/3/17.
  */
 public class WorkerNode {
     public static String topic;
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String args[]) throws InterruptedException, IOException {
         LoadStats stats = new LoadStats();
         MonitorThread monitor = new MonitorThread(stats);
         Thread monitorThread = new Thread(monitor);

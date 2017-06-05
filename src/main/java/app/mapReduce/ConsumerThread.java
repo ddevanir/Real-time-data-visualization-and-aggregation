@@ -33,8 +33,9 @@ public class ConsumerThread implements Runnable{
     @Override
     public void run() {
         System.out.println("Thread starting" + m_threadNumber );
-            ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
+            //ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
             while(stats.getShutdown() == false) {
+                ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
                 while (it.hasNext()) {
                     String msg = new String(it.next().message());
                     System.out.println("Thread " + m_threadNumber + ": " + msg);
@@ -50,6 +51,8 @@ public class ConsumerThread implements Runnable{
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                 }
