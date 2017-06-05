@@ -10,3 +10,48 @@ Step 2: Start the server
 >bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1  --partitions 3 --topic traffic (optional)
 > ./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic weather --partitions 2
 > ./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic traffic --partitions 3
+
+Creation of index in ES
+
+PUT traffic
+{
+    "settings" : {
+        "number_of_shards" : 1
+    },
+    "mappings" : {
+        "incidents" : {
+            "properties" : {
+                "city" : { "type" : "string" },
+                "severity" : { "type" : "integer"},
+                "location" : {"type": "geo_point"},
+                "startTime" : {"type": "date"},
+                "endTime" : {"type": "date"},
+                "type" : { "type" : "integer" }
+            }
+        }
+    }
+}
+
+PUT airweather
+{
+    "settings" : {
+        "number_of_shards" : 1
+    },
+    "mappings" : {
+        "airweathertype" : {
+            "properties" : {
+                "city" : { "type" : "string" },
+                "location" : {"type": "geo_point"},
+                "Date" : {"type": "date"},
+                "temp" : { "type" : "integer" },
+                "temp_min" : { "type" :"integer" },
+                "temp_max" : { "type" :"integer" },
+                "humidity" : { "type" :"integer" },
+                "AQI" : { "type" : "integer" },
+                "type" : { "type" : "string" }
+            }
+        }
+    }
+}
+
+>> ./kibana-5.4.1-darwin-x86_64/config/kibana.yml uncomment elasticsearch.url: "http://localhost:9200" in line 21. This will connect kibana with elasticsearch
