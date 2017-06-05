@@ -4,6 +4,7 @@ import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
 
@@ -17,7 +18,7 @@ public class ConsumerThread implements Runnable{
     ESDriver m_ESDriver;
     private  LoadStats stats;
 
-    public ConsumerThread(KafkaStream m_stream, int m_threadNumber, String topic, LoadStats stats) {
+    public ConsumerThread(KafkaStream m_stream, int m_threadNumber, String topic, LoadStats stats) throws IOException {
         this.m_stream = m_stream;
         this.m_threadNumber = m_threadNumber;
         this.m_topic = topic;
@@ -32,15 +33,16 @@ public class ConsumerThread implements Runnable{
     @Override
     public void run() {
         System.out.println("Thread starting" + m_threadNumber );
-            ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
+            //ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
             while(stats.getShutdown() == false) {
+                ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
                 while (it.hasNext()) {
                     String msg = new String(it.next().message());
                     System.out.println("Thread " + m_threadNumber + ": " + msg);
                     stats.increment();
 
                         try {
-                            if(m_topic.equals("traffic")) {
+                            if(m_topic.equals("newtraffic")) {
                                 m_ESDriver.InsertTrafficJSON(new JSONObject(msg));
                             }
                             else{
@@ -49,6 +51,8 @@ public class ConsumerThread implements Runnable{
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                 }

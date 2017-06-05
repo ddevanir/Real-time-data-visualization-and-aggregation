@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.net.UnknownHostException;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -13,19 +13,19 @@ import java.util.concurrent.ExecutionException;
 public class ESDriverTest {
     private static ESDriver driver;
     @BeforeClass
-    public static void setDriver() throws UnknownHostException {
+    public static void setDriver() throws IOException {
         driver = new ESDriver();
     }
 
     @Test
-    public void test1(){
+    public void test1() throws IOException {
         JSONObject object = new JSONObject();
         object.put("name","USA");
         driver.InsertAirWeatherJSON(object);
     }
 
     @Test
-    public void test2() throws ExecutionException, InterruptedException {
+    public void test2() throws ExecutionException, InterruptedException, IOException {
         JSONObject object = new JSONObject();
         object.put("id",2);
         object.put("name","sachin");
