@@ -10,7 +10,6 @@ package agg.weather;
  *
  */
 import agg.Cities;
-import agg.KPartitioner;
 import kafka.utils.ZkUtils;
 import org.apache.kafka.clients.producer.*;
 
@@ -18,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
+import java.util.UUID;
 
 
 public class WProducer implements Runnable {
@@ -36,23 +36,15 @@ public class WProducer implements Runnable {
 
 
         //Sets up the producer
-        Properties prop = new Properties();
-        prop.put("bootstrap.servers", "127.0.0.1:9092");
-        prop.put("linger.ms", 1);
-        prop.put("acks", "all");
-        prop.put("retries", 0);
-        prop.put("batch.size", 16384);
-        prop.put("buffer.memory", 33554432);
-        prop.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        prop.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        prop.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,KPartitioner.class.getCanonicalName());
-
-
-
-
+        Properties kafkaProps = new Properties();
+        kafkaProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        kafkaProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        kafkaProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        kafkaProps.put(ProducerConfig.ACKS_CONFIG, "1");
+        //kafkaProps.put(ProducerConfig.BATCH_SIZE_CONFIG, "100"); //commented out on purpose
         Producer<String, String> producer = null;
         try {
-            producer = new KafkaProducer<String,String>(prop);
+            producer = new KafkaProducer<String,String>(kafkaProps);
             while (true) {
                 for (String city : Cities.cities) {
                     Calendar calobj = Calendar.getInstance();
@@ -65,16 +57,23 @@ public class WProducer implements Runnable {
                         System.out.println(e.getMessage());
                     }
                     System.out.println(weatherjson);
-                    ProducerRecord<String, String> rec = new ProducerRecord<String, String>(kafkaTopic,weatherjson);
 
-                    producer.send(rec, new Callback() {
+                    ProducerRecord<String, String> record = new ProducerRecord<String, String>(kafkaTopic,weatherjson);
+                    final String key = "key-" + UUID.randomUUID().toString();
+                    producer.send(record, new Callback() {
                         @Override
-                        public void onCompletion(RecordMetadata metadata, Exception e) {
-                           System.out.println("Message sent to topic ->" + metadata.topic()+ " ,parition->" + metadata.partition() +" stored at offset->" + metadata.offset());
+                        public void onCompletion(RecordMetadata rm, Exception excptn) {
+                            if (excptn != null) {
+                                //logger.log(Level.WARNING, "Error sending message with key \n{1}", new Object[]{excptn.getMessage()});
+                            } else {
+                                // logger.log(Level.INFO, "Partition for key is {1}", new Object[]{key,rm.partition()});
+                                System.out.println("Message sent to topic ->" + rm.topic()+ " ,partition->" + rm.partition() +" stored at offset->" + rm.offset());
+                            }
+
                         }
                     });
+
                     System.out.println(df.format(calobj.getTime()) + "  Sent\n");
-                    ;
                 }
 
                 Thread.sleep(timeInterval * 40 * 1000);

@@ -13,17 +13,28 @@ public class MonitorThread implements Runnable{
     private boolean bRun = true;
     private Socket socket = null;
     private static final Logger logger = LogManager.getLogger("MonitorThread");
+    private LoadStats stats;
+
+    public MonitorThread( LoadStats stats){
+        this.stats = stats;
+    }
+
     private void HandleServerMsg(String msg) throws IOException {
         logger.debug("Received msg :" + msg);
         if (msg.equals("Send load rate")) {
             PrintWriter outToServer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            Integer i = 150;
-            outToServer.print(i + "\n");
+            outToServer.print(stats.getLoadrate() + "\n");
             outToServer.flush();
 
         } else if (msg.equals("Shutdown")) {
+            stats.setShutdown();
             bRun = false;
 
+        }
+        else if(msg.equals("Send topic")){
+            PrintWriter outToServer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            outToServer.print(WorkerNode.topic + "\n");
+            outToServer.flush();
         }
 
     }

@@ -15,9 +15,9 @@ public class Driver {
         Integer airThreadDelay = 1;
         Integer weatherThreadDelay = 1;
 
-        String kafkaTrafficTopic = "traffic";
-        String kafkaAirTopic = "air";
-        String kafkaWeatherTopic = "weather";
+        String kafkaTrafficTopic = "newtraffic";
+        String kafkaAirTopic = "newair";
+        String kafkaWeatherTopic = "newweather";
 
         TrafficThreadFunc trafficRunnable = new TrafficThreadFunc(trafficThreadDelay,kafkaTrafficTopic);
         Thread trafficThread = new Thread(trafficRunnable);

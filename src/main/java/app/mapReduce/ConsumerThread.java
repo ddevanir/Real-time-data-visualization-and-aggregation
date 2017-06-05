@@ -15,11 +15,13 @@ public class ConsumerThread implements Runnable{
     private int m_threadNumber;
     private String m_topic;
     ESDriver m_ESDriver;
+    private  LoadStats stats;
 
-    public ConsumerThread(KafkaStream m_stream, int m_threadNumber, String topic) {
+    public ConsumerThread(KafkaStream m_stream, int m_threadNumber, String topic, LoadStats stats) {
         this.m_stream = m_stream;
         this.m_threadNumber = m_threadNumber;
         this.m_topic = topic;
+        this.stats = stats;
         try {
             m_ESDriver = new ESDriver();
         } catch (UnknownHostException e) {
@@ -31,10 +33,11 @@ public class ConsumerThread implements Runnable{
     public void run() {
         System.out.println("Thread starting" + m_threadNumber );
             ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
-            while(true) {
+            while(stats.getShutdown() == false) {
                 while (it.hasNext()) {
                     String msg = new String(it.next().message());
                     System.out.println("Thread " + m_threadNumber + ": " + msg);
+                    stats.increment();
 
                         try {
                             if(m_topic.equals("traffic")) {

@@ -17,13 +17,17 @@ import java.util.concurrent.ExecutionException;
 
 public class ESDriver {
    private TransportClient client;
+   private String esURL = "https://c18a49f9375e6eb9d592e2c47f8d67bf.us-east-1.aws.found.io";
    private String trafficIndex;
    private String trafficIndexype;
    private String airWeatherIDx;
    private String airWeatherIdxType;
 
     public ESDriver() throws UnknownHostException {
+       // Settings settings = Settings.builder()
+       //         .put("cluster.name", "c18a49f9375e6eb9d592e2c47f8d67bf").build();
         client = new PreBuiltTransportClient(Settings.EMPTY)
+               // .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(esURL), 9243));
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
         trafficIndex = "traffic";
         trafficIndexype = "incidents";

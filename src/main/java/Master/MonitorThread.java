@@ -6,10 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.net.Socket;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by sbr on 5/2/17.
@@ -33,29 +30,32 @@ public class MonitorThread implements Runnable{
     private List<Process> pro = new ArrayList<Process>();
 
     private void ReqLoadRate(Socket socket) throws IOException {
-        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter outToClient = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-        String msg = "Send load rate\n";
-        outToClient.print(msg);
-        outToClient.flush();
-        logger.debug("Sending load req to " + socket.getRemoteSocketAddress().toString());
-        String response = inFromClient.readLine();
-        logger.debug("Received load from " +socket.getRemoteSocketAddress().toString()+ "-" + response);
+        try {
+            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter outToClient = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            String msg = "Send load rate\n";
+            outToClient.print(msg);
+            outToClient.flush();
+            logger.debug("Sending load req to " + socket.getRemoteSocketAddress().toString());
+            String response = inFromClient.readLine();
+            logger.debug("Received load from " + socket.getRemoteSocketAddress().toString() + "-" + response);
 
-        ArrayList<Integer> load = workerLoads.get(socket);
-        if(load == null)
-        {
-            load = new ArrayList<Integer>();
-            workerLoads.put(socket,load);
+            ArrayList<Integer> load = workerLoads.get(socket);
+            if (load == null) {
+                load = new ArrayList<Integer>();
+                workerLoads.put(socket, load);
+            }
+            if (load.size() < WINDOW_SIZE) {
+                load.add(Integer.valueOf(response));
+            } else {
+                load.remove(0);
+                load.add(Integer.valueOf(response));
+            }
+            workerLoads.put(socket, load);
         }
-        if(load.size() < WINDOW_SIZE){
-            load.add(Integer.valueOf(response));
-        }else{
-            load.remove(0);
-            load.add(Integer.valueOf(response));
+        catch (Exception e){
+            e.printStackTrace();
         }
-        workerLoads.put(socket,load);
-
     }
     private ACTION CheckLoadRate(Socket socket){
         ArrayList<Integer> load = workerLoads.get(socket);
@@ -77,7 +77,7 @@ public class MonitorThread implements Runnable{
 //        Process p = Runtime.getRuntime().exec("cd target/classes/app/mapReduce\njava WorkerNode\n");
 //        pro.add(p);
            //runProcess("export PATH=$PATH:/Users/sbr/Downloads/apache-maven-3.5.0/bin");
-           Runtime.getRuntime().exec("mvn exec:java -Dexec.mainClass=\"app.mapReduce.WorkerNode\"");
+           Runtime.getRuntime().exec("mvn exec:java -Dexec.mainClass=\"app.mapReduce.WorkerNode\" " + "-Dexec.args=\"" +topic+ "\"");
            //runProcess("mvn exec:java -Dexec.mainClass=\"app.mapReduce.WorkerNode\"");
            lastCreationTime = curTime;
        }
@@ -104,46 +104,79 @@ public class MonitorThread implements Runnable{
         }
     }
 
-    private void KillNode(Socket socket) throws IOException {
-        logger.debug("Killing Node : " + socket.getRemoteSocketAddress().toString());
-        PrintWriter outToClient = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-        String msg = "Shutdown\n";
-        outToClient.print(msg);
-        outToClient.flush();
-        workerLoads.remove(socket);
-        socket.close();
+    private void KillNode(Socket socket, String topic,Iterator iterator) throws IOException {
+        Map<String, TCPConnection> clientMap;
+        if (topic.equals("newtraffic")){
+            clientMap = MasterNode.trafficMap;
+        }
+        else {
+            clientMap = MasterNode.airWeatherMap;
+        }
+        if(clientMap.size() > 1) {
+            logger.debug("Killing Node : " + socket.getRemoteSocketAddress().toString());
+            PrintWriter outToClient = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            String msg = "Shutdown\n";
+            outToClient.print(msg);
+            outToClient.flush();
+            workerLoads.remove(socket);
+//            if (topic.equals("newtraffic")){
+//                MasterNode.trafficMap.remove(socket.getRemoteSocketAddress().toString());
+//            }
+//            else {
+//                MasterNode.airWeatherMap.remove(socket.getRemoteSocketAddress().toString());
+//            }
+            iterator.remove();
+            socket.close();
+        }
     }
 
     @Override
     public void run() {
 
         while(true){
-            Map<String,TCPConnection> clientMap = MasterNode.clientMap;
-            for (Map.Entry<String, TCPConnection> entry : clientMap.entrySet()){
-                Socket socket = entry.getValue().getSocket();
-                if(socket.isConnected() == false){
-                    workerLoads.remove(socket);
-                    continue;
+            try{
+            for(int i = 0 ; i < 2 ; i++) {
+                Map<String, TCPConnection> clientMap;
+                String topic;
+                Iterator it;
+                if (i == 0) {
+                    clientMap = MasterNode.trafficMap;
+                    topic = "newtraffic";
+                    it = clientMap.entrySet().iterator();
+                } else {
+                    clientMap = MasterNode.airWeatherMap;
+                    topic = "newweather";
+                    it = clientMap.entrySet().iterator();
                 }
-                try {
+
+                while (it.hasNext())  {
+                    Map.Entry<String, TCPConnection> pair = (Map.Entry<String, TCPConnection>)it.next();
+                    Socket socket = pair.getValue().getSocket();
+                    if (socket.isConnected() == false || socket.isClosed() == true) {
+                        workerLoads.remove(socket);
+                        if (topic.equals("newtraffic")) {
+                            MasterNode.trafficMap.remove(socket.getRemoteSocketAddress().toString());
+                        } else {
+                            MasterNode.airWeatherMap.remove(socket.getRemoteSocketAddress().toString());
+                        }
+                        continue;
+                    }
+
                     ReqLoadRate(socket);
                     ACTION action = CheckLoadRate(socket);
-                    if(action == ACTION.NO_ACTION)
+                    if (action == ACTION.NO_ACTION)
                         logger.debug("Take No Action" + socket.getRemoteSocketAddress().toString());
-                    else if(action == ACTION.CREATE_NEW_NODE)
-                        CreateNewNode("");
-                    else if(action == ACTION.KILL_NODE)
-                        KillNode(socket);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    else if (action == ACTION.CREATE_NEW_NODE) {
+                        CreateNewNode(topic);
+                    } else if (action == ACTION.KILL_NODE)
+                        KillNode(socket, topic,it);
+
                 }
-                catch (Exception e) {
-                    e.printStackTrace();
+
+                Thread.sleep(TIME * 1000);
                 }
             }
-            try {
-                Thread.sleep(TIME*1000);
-            } catch (InterruptedException e) {
+            catch(Exception e){
                 e.printStackTrace();
             }
         }

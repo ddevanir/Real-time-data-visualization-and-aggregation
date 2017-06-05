@@ -4,9 +4,13 @@ import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by beep on 4/29/17.
@@ -16,10 +20,12 @@ public class ConsumerGroup {
     private final ConsumerConnector consumer;
     private final String topic;
     private ExecutorService executor;
+    private LoadStats stats;
 
-    public ConsumerGroup(String a_zookeeper, String a_groupId, String a_topic) {
+    public ConsumerGroup(String a_zookeeper, String a_groupId, String a_topic, LoadStats stats) {
         consumer =  kafka.consumer.Consumer.createJavaConsumerConnector(createConsumerConfig(a_zookeeper, a_groupId));
         this.topic = a_topic;
+        this.stats = stats;
     }
 
     public static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
@@ -29,8 +35,6 @@ public class ConsumerGroup {
         props.put("zookeeper.session.timeout.ms", "400");
         props.put("zookeeper.sync.time.ms", "200");
         props.put("auto.commit.interval.ms", "1000");
-        props.put("auto.offset.reset", "smallest");
-        props.put("num.partitions", "2");
         return new ConsumerConfig(props);
     }
 
@@ -60,26 +64,38 @@ public class ConsumerGroup {
         //
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new ConsumerThread(stream, threadNumber,topic));
+            executor.submit(new ConsumerThread(stream, threadNumber,topic,stats));
             threadNumber++;
         }
     }
 
-    public static void main(String[] args) {
-        String zooKeeper = "localhost:2181";
-        String groupId = "group3";
-        String topic = args[0];
-        int threads = Integer.parseInt("4");
-
-        ConsumerGroup obj = new ConsumerGroup(zooKeeper, groupId, topic);
-        obj.run(threads);
-
-        while(true) {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException ie) {
+    public void shutdown(){
+        consumer.shutdown();
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(5000, TimeUnit.MILLISECONDS)) {
+                System.out.println("Timed out waiting for consumer threads to shut down, exiting uncleanly");
             }
+        } catch (InterruptedException e) {
+            System.out.println("Interrupted during shutdown, exiting uncleanly");
         }
-//        obj.shutdown();
     }
+
+//    public static void main(String[] args) {
+//        String zooKeeper = "localhost:2181";
+//        String groupId = "group3";
+//        String topic = args[0];
+//        int threads = Integer.parseInt("4");
+//
+//        ConsumerGroup obj = new ConsumerGroup(zooKeeper, groupId, topic);
+//        obj.run(threads);
+//
+//        while(true) {
+//            try {
+//                Thread.sleep(10000);
+//            } catch (InterruptedException ie) {
+//            }
+//        }
+////        obj.shutdown();
+//    }
 }
