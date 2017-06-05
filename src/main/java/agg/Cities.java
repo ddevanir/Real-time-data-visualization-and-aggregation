@@ -15,7 +15,7 @@ public class Cities {
         cities.add("NewYork");
 
 
-        getLatLon.put("NewYork","40.7128,74.0059"); // lat,lon
+        getLatLon.put("NewYork","40.7128,-74.0059"); // lat,lon
         citiesbybb.put("NewYork","40.477399%2C-74.259090%2C40.917577%2C-73.700272");
 
     }

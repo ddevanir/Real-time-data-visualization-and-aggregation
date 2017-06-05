@@ -40,7 +40,7 @@ public class ConsumerThread implements Runnable{
                     stats.increment();
 
                         try {
-                            if(m_topic.equals("traffic")) {
+                            if(m_topic.equals("newtraffic")) {
                                 m_ESDriver.InsertTrafficJSON(new JSONObject(msg));
                             }
                             else{
