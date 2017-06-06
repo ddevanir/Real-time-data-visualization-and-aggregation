@@ -10,7 +10,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mortbay.util.ajax.JSON;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -102,6 +101,7 @@ public class WeatherAPI {
         finalData.put("temp_max", weatherjson.getJSONObject("main").get("temp_max"));
         finalData.put("type", weatherjson.getJSONArray("weather").getJSONObject(0).get("main"));
         finalData.put("city", city);
+        finalData.put("cityID", Cities.getID.get(city));
         finalData.put("location", Cities.getLatLon.get(city));
         finalData.put("AQI",airData.get("AQI"));
         finalData.put("ID",airData.get("ID"));

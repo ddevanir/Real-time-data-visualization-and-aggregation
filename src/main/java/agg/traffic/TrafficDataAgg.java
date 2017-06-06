@@ -42,6 +42,7 @@ public class TrafficDataAgg{
             JSONObject traffic = new JSONObject();
             traffic.put("id",obj.getLong("id"));
             traffic.put("city",key);
+            traffic.put("cityID",Cities.getID.get(key));
             traffic.put("location", Cities.getLatLon.get(key));
             traffic.put("type",obj.getInt("type"));
             traffic.put("severity",obj.getInt("severity"));
