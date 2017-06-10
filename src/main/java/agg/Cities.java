@@ -38,5 +38,48 @@ public class Cities {
         getLatLon.put("Bangalore","12.971,77.5946");
         citiesbybb.put("Bangalore","12.734289%2C77.379198%2C13.173706%2C77.882681");
 
+        cities.add("Seattle");
+        getID.put("Seattle",6);
+        getLatLon.put("Seattle","47.6062,-122.3321");
+        citiesbybb.put("Seattle","47.491912%2C-122.459696%2C47.734145%2C-122.224433");
+
+        cities.add("San%20Francisco");
+        getID.put("San%20Francisco",7);
+        getLatLon.put("San%20Francisco","37.7749,-122.4194");
+        citiesbybb.put("San%20Francisco","37.639830%2C-123.173825%2C37.929824%2C-122.281780");
+
+        cities.add("Austin");
+        getID.put("Austin",8);
+        getLatLon.put("Austin","30.2672,-97.7431");
+        citiesbybb.put("Austin","30.098659%2C-97.938383%2C30.516863%2C-97.568420");
+
+        cities.add("Denver");
+        getID.put("Denver",9);
+        getLatLon.put("Denver","39.7392,-104.9903");
+        citiesbybb.put("Denver","39.614431%2C-105.109927%2C39.914247%2C-104.600296");
+
+        cities.add("Paris");
+        getID.put("Paris",10);
+        getLatLon.put("Paris","48.8566,2.3522");
+        citiesbybb.put("Paris","48.815573%2C2.224199%2C48.902145%2C2.469921");
+
+        cities.add("London");
+        getID.put("London",11);
+        getLatLon.put("London","51.5074,-0.1278");
+        citiesbybb.put("London","51.384940%2C-0.351468%2C51.672343%2C0.148271");
+
+        cities.add("Beijing");
+        getID.put("Beijing",12);
+        getLatLon.put("Beijing","39.9042,116.4074");
+        citiesbybb.put("Beijing","39.442758%2C115.423411%2C41.060816%2C117.514625");
+
+        cities.add("Atlanta");
+        getID.put("Atlanta",13);
+        getLatLon.put("Atlanta","33.7490,84.3880");
+        citiesbybb.put("Atlanta","33.647808%2C-84.551819%2C33.887618%2C-84.289389");
+
+
+
+
     }
 }
