@@ -14,6 +14,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class TrafficDataAgg{
     private String appKey = "cPF1vAQ0yQOCSJ76v94CStE6XsanwaBt";
@@ -34,6 +37,9 @@ public class TrafficDataAgg{
     }
 
     public JSONArray parseJSON(JSONObject trafficData, String key) throws JSONException{
+        Calendar calobj = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String date = df.format(calobj.getTime());
         JSONArray ret = new JSONArray();
         JSONArray array = trafficData.getJSONArray("incidents");
 
@@ -41,6 +47,7 @@ public class TrafficDataAgg{
             JSONObject obj = array.getJSONObject(i);
             JSONObject traffic = new JSONObject();
             traffic.put("id",obj.getLong("id"));
+            traffic.put("Date", date);
             traffic.put("city",key);
             traffic.put("cityID",Cities.getID.get(key));
             traffic.put("location", Cities.getLatLon.get(key));
