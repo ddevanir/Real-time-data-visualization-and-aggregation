@@ -55,3 +55,39 @@ PUT airweather
 }
 
 >> ./kibana-5.4.1-darwin-x86_64/config/kibana.yml uncomment elasticsearch.url: "http://localhost:9200" in line 21. This will connect kibana with elasticsearch
+
+Setup details:
+1) run kafka on your mac.
+no need to create topic in prior. just run.
+but run kafka version : kafka_2.11-0.10.1.0
+2) start driver which will push data to kafka
+3) start master node
+4) start one worker node with cmd line argument as newtraffic
+5) start one worker node with cmd line argument as newweather
+6) Data will be pushed to elastic cloud.
+7) To verify step 6, run the below queries on traffic and airweather indices, you should be able to see an increase in the document count.
+
+GET airweather/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET traffic/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+Sample response : 
+"hits": {
+    "total": 366,
+    "max_score": 1,
+    "hits":
+
+The number total:336 is the total number of documents in the queried index.
+So this number should be increasing every minute for airweather.
+But for traffic, it may or may not increase as we update old entries.
+Only if a new traffic incident is reported, this number increases.
