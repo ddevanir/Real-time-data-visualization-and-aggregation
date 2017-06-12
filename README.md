@@ -104,3 +104,15 @@ Step 1: login to login url using kevseb1993@gmail.com and ucirvine
 Step 2: Click view existing clusters
 Step 3: Click Kibana endpoint
 Step 4 : Log in to Kibana using cluster username and password
+
+>>>>
+Visualisation in Kibana
+1 = Construction
+2 = Event
+3 = Congestion/Flow
+4 = Incident/accident
+severity 0 - 4, 4 indicates highest severity
+To generate the pixel box around the cities
+>> http://www.mastersindatascience.org/blog/open-source-tools-for-big-data-analysis/
+South Latitude, West Longitude, North Latitude, East Longitude
+>> https://www.mapdevelopers.com/geocode_bounding_box.php
