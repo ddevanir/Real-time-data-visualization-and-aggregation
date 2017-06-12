@@ -92,20 +92,18 @@ So this number should be increasing every minute for airweather.
 But for traffic, it may or may not increase as we update old entries.
 Only if a new traffic incident is reported, this number increases.
 
->>>>
 Kibana details:
->> Kibana https://c984fbba62aceaab2f6c8abf3ca90b63.us-east-1.aws.found.io
+1)  Kibana https://c984fbba62aceaab2f6c8abf3ca90b63.us-east-1.aws.found.io
 new cluster username :elastic
 new cluster password : ZvXhxvOxMmszYfUxMynvLTj2
->> HTTP endpoint : https://2fe405d238cb5f93c1de41de0a2531a1.us-east-1.aws.found.io:9243
->> https://www.elastic.co/guide/en/cloud/current/security.html#security-transport
->> login url https://cloud.elastic.co/#/authentication/login/
+2) HTTP endpoint : https://2fe405d238cb5f93c1de41de0a2531a1.us-east-1.aws.found.io:9243
+3) https://www.elastic.co/guide/en/cloud/current/security.html#security-transport
+4) login url https://cloud.elastic.co/#/authentication/login/
 Step 1: login to login url using kevseb1993@gmail.com and ucirvine
 Step 2: Click view existing clusters
 Step 3: Click Kibana endpoint
 Step 4 : Log in to Kibana using cluster username and password
 
->>>>
 Visualisation in Kibana
 1 = Construction
 2 = Event
@@ -113,6 +111,6 @@ Visualisation in Kibana
 4 = Incident/accident
 severity 0 - 4, 4 indicates highest severity
 To generate the pixel box around the cities
->> http://www.mastersindatascience.org/blog/open-source-tools-for-big-data-analysis/
+1) http://www.mastersindatascience.org/blog/open-source-tools-for-big-data-analysis/
 South Latitude, West Longitude, North Latitude, East Longitude
->> https://www.mapdevelopers.com/geocode_bounding_box.php
+2) https://www.mapdevelopers.com/geocode_bounding_box.php
