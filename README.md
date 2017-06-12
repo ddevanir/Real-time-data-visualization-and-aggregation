@@ -54,17 +54,17 @@ PUT airweather
     }
 }
 
->> ./kibana-5.4.1-darwin-x86_64/config/kibana.yml uncomment elasticsearch.url: "http://localhost:9200" in line 21. This will connect kibana with elasticsearch
+./kibana-5.4.1-darwin-x86_64/config/kibana.yml uncomment elasticsearch.url: "http://localhost:9200" in line 21. This will connect kibana with elasticsearch
 
 Setup details:
-1) run kafka on your mac.
+1) run kafka on your Mac.
 no need to create topic in prior. just run.
-but run kafka version : kafka_2.11-0.10.1.0
+but run kafka version: kafka_2.11-0.10.1.0
 2) start driver which will push data to kafka
 3) start master node
 4) start one worker node with cmd line argument as newtraffic
 5) start one worker node with cmd line argument as newweather
-6) Data will be pushed to elastic cloud.
+6) Data will be pushed to the elastic cloud.
 7) To verify step 6, run the below queries on traffic and airweather indices, you should be able to see an increase in the document count.
 
 GET airweather/_search
@@ -94,22 +94,22 @@ Only if a new traffic incident is reported, this number increases.
 
 Kibana details:
 1)  Kibana https://c984fbba62aceaab2f6c8abf3ca90b63.us-east-1.aws.found.io
-new cluster username :elastic
-new cluster password : ZvXhxvOxMmszYfUxMynvLTj2
+new cluster username : elastic
+new cluster password: ZvXhxvOxMmszYfUxMynvLTj2
 2) HTTP endpoint : https://2fe405d238cb5f93c1de41de0a2531a1.us-east-1.aws.found.io:9243
 3) https://www.elastic.co/guide/en/cloud/current/security.html#security-transport
-4) login url https://cloud.elastic.co/#/authentication/login/
-Step 1: login to login url using kevseb1993@gmail.com and ucirvine
+4) login URL https://cloud.elastic.co/#/authentication/login/
+Step 1: login to login URL using kevseb1993@gmail.com and ucirvine
 Step 2: Click view existing clusters
 Step 3: Click Kibana endpoint
-Step 4 : Log in to Kibana using cluster username and password
+Step 4: Log into Kibana using cluster username and password
 
 Visualisation in Kibana
 1 = Construction
 2 = Event
 3 = Congestion/Flow
 4 = Incident/accident
-severity 0 - 4, 4 indicates highest severity
+severity 0 - 4, 4 indicates the highest severity
 To generate the pixel box around the cities
 1) http://www.mastersindatascience.org/blog/open-source-tools-for-big-data-analysis/
 South Latitude, West Longitude, North Latitude, East Longitude
