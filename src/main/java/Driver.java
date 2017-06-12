@@ -11,7 +11,7 @@ public class Driver {
         Cities.Init();
 
         // in minutes
-        Integer trafficThreadDelay = 1;
+        Integer trafficThreadDelay = 30;
         Integer airThreadDelay = 1;
         Integer weatherThreadDelay = 1;
 

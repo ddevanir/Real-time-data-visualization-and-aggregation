@@ -142,7 +142,7 @@ public class MonitorThread implements Runnable{
                 if (i == 0) {
                     clientMap = MasterNode.trafficMap;
                     topic = "newtraffic";
-                    it = clientMap.entrySet().iterator();
+                   it = clientMap.entrySet().iterator();
                 } else {
                     clientMap = MasterNode.airWeatherMap;
                     topic = "newweather";
@@ -167,10 +167,10 @@ public class MonitorThread implements Runnable{
                     if (action == ACTION.NO_ACTION)
                         logger.debug("Take No Action" + socket.getRemoteSocketAddress().toString());
                     else if (action == ACTION.CREATE_NEW_NODE) {
-                        CreateNewNode(topic);
-                    } else if (action == ACTION.KILL_NODE)
-                        KillNode(socket, topic,it);
-
+                        //CreateNewNode(topic);
+                    } else if (action == ACTION.KILL_NODE) {
+                        //KillNode(socket, topic,it);
+                    }
                 }
 
                 Thread.sleep(TIME * 1000);

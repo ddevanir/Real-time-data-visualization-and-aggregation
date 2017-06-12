@@ -108,15 +108,15 @@ public class Cities {
         getLatLon.put("Mexico%20City","19.4326,-99.1332");
         citiesbybb.put("Mexico%20City","19.188710%2C-99.326777%2C19.592757%2C-98.960448");
 
-        cities.add("Lima");
-        getID.put("Lima",20);
-        getLatLon.put("Lima","-12.0464,77.0428");
-        citiesbybb.put("Lima","-12.253289%2C-77.187219%2C-11.799988%2C-76.788340");
+//        cities.add("Lima");
+//        getID.put("Lima",20);
+//        getLatLon.put("Lima","-12.0464,77.0428");
+//        citiesbybb.put("Lima","-12.253289%2C-77.187219%2C-11.799988%2C-76.788340");
 
-        cities.add("Buenos%20Aires");
-        getID.put("Buenos%20Aires",21);
-        getLatLon.put("Buenos%20Aires","-34.6037,58.3816");
-        citiesbybb.put("Buenos%20Aires","-34.705101%2C-58.531452%2C-34.526546%2C-58.335145");
+//        cities.add("Buenos%20Aires");
+//        getID.put("Buenos%20Aires",21);
+//        getLatLon.put("Buenos%20Aires","-34.6037,58.3816");
+//        citiesbybb.put("Buenos%20Aires","-34.705101%2C-58.531452%2C-34.526546%2C-58.335145");
 
         cities.add("Calgary");
         getID.put("Calgary",22);
