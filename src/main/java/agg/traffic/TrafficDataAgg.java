@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class TrafficDataAgg{
-    private String appKey = "cPF1vAQ0yQOCSJ76v94CStE6XsanwaBt";
+    private String appKey = "4NlytT84ZGkD6oMvUIpWzHMCPDVKt2ex";
 
 
     public JSONObject getTrafficData(String city) throws URISyntaxException, IOException, HttpException {
